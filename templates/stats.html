@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="header-title">Reservation Stats</h1>
+        <p class="lead">Total reservations: {{ total_reservations }}</p>
+    <br>
+        <h2 class="header-title">Reservations by Room</h2>
+    <br>
+        <ul class="list-group">
+        {% for room_number, count in reservations_by_room %}
+            <li class="list-group-item">Room {{ room_number }}: {{ count }}</li>
+        {% endfor %}
+        </ul>
+        <br>
+        <br>
+        <h2 class="header-title">Reservations by Time Slot</h2>
+    <br>
+        <ul class="list-group">
+        {% for time_slot, count in reservations_by_time_slot %}
+            <li class="list-group-item">Time Slot {{ time_slot }}: {{ count }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

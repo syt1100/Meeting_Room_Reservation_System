@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function() {
+        var availableSlots = {{ available_slots_js | safe }};
+        $('#room_number').change(function() {
+            var roomNumber = $(this).val();
+            var slots = availableSlots[roomNumber]['slots'];
+            var timeSlotSelector = $('#time_slot');
+            timeSlotSelector.empty();
+            $.each(slots, function(key, value) {
+                timeSlotSelector.append($("<option></option>").attr("value", key).text(key));
+            });
+        });
+    });
+</script>
+
+<div class="content-container">
+    <h1 class="header-title">Reserve a Room</h1>
+    <form method="post">
+        <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" value="{{ date }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="room_number">Room Number</label>
+            <select name="room_number" id="room_number" class="form-control" required>
+                {% for room in slots.keys() %}
+                    <option value="{{ room }}">Room {{ room }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="time_slot">Time Slot</label>
+            <select name="time_slot" id="time_slot" class="form-control" required>
+                {% for room, details in slots.items() %}
+                    {% for slot in details['slots'].keys() %}
+                        <option value="{{ slot }}">{{ slot }}</option>
+                    {% endfor %}
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="name">Guest Name</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <!-- 添加新的输入框: Reserve Agent -->
+        <div class="form-group">
+            <label for="reserve_agent">Reserve Agent</label>
+            <input type="text" class="form-control" id="reserve_agent" name="reserve_agent" required>
+        </div>
+
+        <!-- 添加新的输入框: Comment/Special Request -->
+        <div class="form-group">
+            <label for="special_request">Comment/Special Request</label>
+            <textarea class="form-control" id="special_request" name="special_request" rows="3"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Reserve</button>
+    </form>
+</div>
+{% endblock %}

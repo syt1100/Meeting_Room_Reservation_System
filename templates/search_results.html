@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <h1 class="header-title primary">Search Results</h1>
+  {% if reservations %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Reservation ID</th>
+          <th>Room Number</th>
+          <th>Date</th>
+          <th>Time Slot</th>
+          <th>Guest Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in reservations %}
+          <tr>
+            <td>{{ reservation.id }}</td>
+            <td>{{ reservation.room_number }}</td>
+            <td>{{ reservation.date }}</td>
+            <td>{{ reservation.time_slot }}</td>
+            <td>{{ reservation.name }}</td>
+            <td>
+              <a href="{{ url_for('detail', reservation_id=reservation.id) }}" class="btn btn-primary">View Details</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No reservations found.</p>
+  {% endif %}
+</div>
+{% endblock %}

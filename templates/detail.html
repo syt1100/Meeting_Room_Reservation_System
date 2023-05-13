@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Reservation Details{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <h1 class="header-title primary">Reservation Details</h1>
+  <div class="card">
+    <div class="card-header">
+      Reservation ID: {{ reservation.id }}
+    </div>
+    <div class="card-body">
+      <ul class="reservation-details">
+        <li>
+          <span class="detail-label">Room Number:</span>
+          <span class="detail-value">{{ reservation.room_number }}</span>
+        </li>
+          <br>
+        <li>
+          <span class="detail-label">Time Slot:</span>
+          <span class="detail-value">{{ reservation.time_slot }}</span>
+        </li>
+          <br>
+        <li>
+          <span class="detail-label">Guest Name:</span>
+          <span class="detail-value">{{ reservation.name }}</span>
+        </li>
+          <br>
+        <li>
+          <span class="detail-label">Date:</span>
+          <span class="detail-value">{{ reservation.date }}</span>
+        </li>
+          <br>
+        <li>
+          <span class="detail-label">Reservation Agent:</span>
+          <span class="detail-value">{{ reservation.reserve_agent }}</span>
+        </li>
+          <br>
+        <li>
+          <span class="detail-label">Comment/Special:</span>
+          <span class="detail-value">{{ reservation.special_request }}</span>
+        </li>
+      </ul>
+        <a href="{{ url_for('cancel_reservation_view', reservation_id=reservation.id) }}" class="btn btn-danger">Cancel</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

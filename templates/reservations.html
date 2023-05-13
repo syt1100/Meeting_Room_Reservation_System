@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meeting Room Reservation System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: #333333;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 5px;
+            font-size: 14px;
+        }
+        input[type="submit"] {
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Meeting Room Reservation System</h1>
+    <form action="/reservations" method="GET">
+        <label for="date">Date (YYYY-MM-DD):</label>
+        <input type="text" id="date" name="date">
+        <input type="submit" value="Search">
+    </form>
+    {% if reservations_list %}
+        <h2>Reservations for {{ date }}:</h2>
+        <ul>
+        {% for reservation in reservations_list %}
+            <li>Reservation ID: {{ reservation.reservation_id }}, Room {{ reservation.room_number }}, {{ reservation.time_slot }} - {{ (datetime.strptime(reservation.time_slot, '%H:%M') + timedelta(hours=time_delta)).strftime('%H:%M') }} reserved by {{ reservation.name }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No reservations found for the specified date.</p>
+    {% endif %}
+</body>
+</html>

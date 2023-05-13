@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Meeting Room Reservation System{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <h1 class="header-title">Meeting Room Reservation System</h1>
+  <br>
+  <br>
+  <br>
+  {% if reservations %}
+    <h2>Today's Reservations:</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Room</th>
+          <th>Time Slot</th>
+          <th>Guest Name</th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for reservation in reservations %}
+          <tr>
+            <td>{{ reservation.room_number }}</td>
+            <td>{{ reservation.time_slot }} - {{ reservation.time_slot|endtime }}</td>
+            <td>{{ reservation.name }}</td>
+            <td>
+              <form action="{{ url_for('cancel_reservation_view', reservation_id=reservation.id) }}" method="GET">
+                <button type="submit" class="btn btn-danger">Cancel</button>
+              </form>
+            </td>
+            <td>
+              <form action="{{ url_for('detail', reservation_id=reservation.id) }}" method="GET">
+                <button type="submit" class="btn btn-primary">Detail</button>
+              </form>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <h2>No Reservation For Today</h2>
+  {% endif %}
+</div>
+{% endblock %}
+

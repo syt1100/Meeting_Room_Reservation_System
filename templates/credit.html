@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Credit{% endblock %}
+
+{% block content %}
+    <h1 class="header-title primary">Credit</h1>
+    <p class="accent-dark-gray">&copy; 2023 CyberPKT Software. All rights reserved.</p>
+    <br>
+    <h2 class="header-title primary">Version: {{ version }}</h2>
+    <br>
+    <h2 class="header-title primary">Updates:</h2>
+    <ul>
+        {% for update in updates %}
+            <li><span class="accent-pink">{{ update.date }}</span> - {{ update.content }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

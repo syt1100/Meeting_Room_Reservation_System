@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-container">
+  <h1 class="header-title primary">Cancel Reservation</h1>
+  <form method="post">
+    <div class="form-group">
+      <label for="reservation_id">Reservation ID:</label>
+      <input type="text" id="reservation_id" name="reservation_id" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary">Cancel by Reservation ID</button>
+  </form>
+
+  <br><br><br>
+
+  <h2 class="header-title primary">Cancel by Date and Room</h2>
+  <form method="get">
+    <div class="form-group">
+      <label for="date">Date:</label>
+      <input type="date" id="date" name="date" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Get Reservations</button>
+  </form>
+
+  {% if reservations %}
+    <h3>Reservations on {{ date }}</h3>
+    <ul>
+      {% for reservation in reservations %}
+        <li>
+          {{ reservation['room_name'] }} ({{ reservation['start_time'].strftime('%H:%M') }} - {{ reservation['end_time'].strftime('%H:%M') }}) {{ reservation['name'] }}<br>
+          <form method="post">
+            <input type="hidden" name="reservation_id" value="{{ reservation['reservation_id'] }}">
+            <button type="submit" class="btn btn-primary">Cancel</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>
+{% endblock %}

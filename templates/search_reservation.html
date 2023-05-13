@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Search Reservation{% endblock %}
+
+{% block content %}
+<div class="content-container">
+  <h1 class="header-title primary">Search Reservation</h1>
+  <form action="{{ url_for('search_reservation_results') }}" method="POST">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="reservation_id">Reservation ID:</label>
+        <input type="text" id="reservation_id" name="reservation_id" class="form-control">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="guest_name">Guest Name:</label>
+        <input type="text" id="guest_name" name="guest_name" class="form-control">
+      </div>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="button" class="btn btn-secondary" onclick="clearForm()">Clear</button>
+    </div>
+  </form>
+</div>
+<script>
+  function clearForm() {
+    document.getElementById("date").value = "";
+    document.getElementById("reservation_id").value = "";
+    document.getElementById("guest_name").value = "";
+  }
+</script>
+{% endblock %}

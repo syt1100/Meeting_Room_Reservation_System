@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<style>
+.rooms-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.room {
+  margin: 0 20px;
+}
+</style>
+
+<div class="content-container">
+  <h1 class="header-title primary">Availability</h1>
+
+  <form method="get" action="{{ url_for('availability') }}">
+    <div class="form-group">
+      <label for="date">Select a date:</label>
+      <input type="date" id="date" name="date" value="{{ date }}" class="form-control">
+    </div>
+    <button type="submit" class="btn btn-primary btn-sm flat-button">Check Availability</button>
+  </form>
+  <br>
+  <br>
+  <h2 class="header-title primary">Available slots:</h2>
+  <div class="rooms-container">
+    {% for room_number, room in available_slots.items() %}
+    <div class="room">
+      <span class="room-number">Room {{ room_number }}</span>
+    <br>
+      <ul class="time-slots">
+        {% for time_slot in room['slots'] %}
+        <li class="time-slot">
+        <br>
+          <div class="time-slot-info">
+            <span class="time">{{ time_slot }}</span>
+            <a href="{{ url_for('reserve', date=date, room_number=room_number, time_slot=time_slot) }}" class="btn btn-primary btn-sm flat-button">Reserve</a>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+
+  <h2 class="header-title primary">Booked slots:</h2>
+  <ul>
+    {% for slot in booked_slots %}
+    <li>
+      <span class="reservation-id">{{ slot['reservation_id'] }}</span>
+      <span class="room-name">{{ slot['room_name'] }}</span>
+      <span class="time-slot">{{ slot['start_time'].strftime('%H:%M') }} - {{ slot['end_time'].strftime('%H:%M') }}</span>
+      <span class="reserved-by">{{ slot['name'] }}</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}
